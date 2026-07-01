@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: bechakeena_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo_mysql, mbstring, openssl, bcmath, fileinfo, gd, zip
+          coverage: none
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Build assets
+        run: npm run build
+
+      - name: Check PHP formatting (Pint)
+        run: vendor/bin/pint --test
+
+      - name: Lint JS (ESLint)
+        run: npm run lint
+
+      - name: Check JS formatting (Prettier)
+        run: npm run format:check
+
+      # Run migrations + tests against MySQL so CI matches production.
+      - name: Run tests (MySQL)
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: bechakeena_test
+          DB_USERNAME: root
+          DB_PASSWORD: root
+        run: |
+          php artisan migrate --force
+          php artisan test

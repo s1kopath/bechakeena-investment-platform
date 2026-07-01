@@ -45,8 +45,8 @@ no REST layer to maintain for the first-party UI. Same routes, same middleware, 
 | Layer | Choice | Notes |
 |-------|--------|-------|
 | Language / Framework | **PHP 8.3 + Laravel 13** | Already scaffolded (`composer.json`: `laravel/framework ^13.8`) |
-| Public UI | **Livewire 3** + Blade | Server-rendered, SEO-first |
-| App UI (dashboard + admin) | **Inertia.js 2 + React 18** | SPA experience, server-driven routing |
+| Public UI | **Livewire 4** + Blade | Server-rendered, SEO-first |
+| App UI (dashboard + admin) | **Inertia.js (inertia-laravel 3) + React 19** | SPA experience, server-driven routing |
 | Styling | **Tailwind CSS 4** | Already scaffolded (`@tailwindcss/vite`) |
 | Build | **Vite 8** + `laravel-vite-plugin` | Already scaffolded |
 | Database | **SQLite** (local/dev/test) · **MySQL 8** (production) | Keep migrations/queries DB-agnostic; test on MySQL in CI |
@@ -78,8 +78,8 @@ npm i @inertiajs/react react react-dom
 npm i -D @vitejs/plugin-react eslint prettier
 ```
 
-> Verify exact versions against current releases at install time — this is Laravel 13 / Inertia 2
-> era. Pin majors in `composer.json` / `package.json`.
+> Installed in Phase 0 (2026-07-01): `livewire/livewire ^4.3`, `inertiajs/inertia-laravel ^3.1`,
+> `@inertiajs/react ^3.5`, `react ^19`. Pin majors in `composer.json` / `package.json`.
 
 ## Request lifecycle
 

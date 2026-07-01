@@ -28,8 +28,8 @@ Agents and new contributors: read [`CLAUDE.md`](CLAUDE.md) first for orientation
 ## Tech stack
 
 - **Backend:** PHP 8.3, Laravel 13
-- **Public pages (SEO):** Blade + Livewire 3 (server-rendered)
-- **Investor dashboard & admin:** React 18 + Inertia.js 2
+- **Public pages (SEO):** Blade + Livewire 4 (server-rendered)
+- **Investor dashboard & admin:** React 19 + Inertia.js
 - **Styling / build:** Tailwind CSS 4, Vite 8
 - **Database:** SQLite (local/dev/test) · MySQL 8 (production)
 - **Auth:** Laravel session auth + Google OAuth (Socialite)

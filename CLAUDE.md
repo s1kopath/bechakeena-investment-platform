@@ -25,8 +25,8 @@ Full context: [docs/00-overview.md](docs/00-overview.md).
 ## Locked architecture decisions (do not change without updating docs)
 
 - **Single Laravel app.** Hybrid frontend:
-  - Public/SEO pages → **Blade + Livewire 3** (server-rendered)
-  - Investor dashboard → **React + Inertia.js 2**
+  - Public/SEO pages → **Blade + Livewire 4** (server-rendered)
+  - Investor dashboard → **React 19 + Inertia.js** (inertia-laravel 3)
   - Admin panel → **React + Inertia** under `/admin`, separate `admin` guard + spatie RBAC
     (super_admin / manager / finance)
 - **Database:** **SQLite** local/dev/test, **MySQL 8** production. Keep migrations & queries
@@ -40,12 +40,27 @@ Full context: [docs/00-overview.md](docs/00-overview.md).
 
 > Update this section at the end of every working session.
 
-- **Phase:** Not started — codebase is the **fresh Laravel 13 skeleton** (no Livewire, Inertia,
-  React, or auth installed yet).
-- **Next action:** **Phase 0 — Foundation & Tooling** in [docs/03-roadmap.md](docs/03-roadmap.md#phase-0--foundation--tooling--size-l---none):
-  wire Livewire + Inertia/React, configure DB (SQLite locally), split routes, base layouts, tooling
-  (Pint/ESLint/Prettier), and a green CI.
-- **`.env`:** not yet configured (skeleton default). Set `DB_CONNECTION=sqlite` for local.
+- **Phase 0 — Foundation & Tooling: ✅ COMPLETE** (2026-07-01). The hybrid stack is wired and
+  verified:
+  - Livewire 4 + Inertia (inertia-laravel 3) + React 19 installed; Vite builds; `@` → `resources/js` alias.
+  - `/` → Blade + Livewire public page (server-rendered, HTTP 200).
+  - `/dashboard` → Inertia React page `Dashboard/Index` (HTTP 200). **No auth yet** — route is open
+    for the smoke test; Phase 1 wraps it in `['auth','verified']` (see TODO in `routes/web.php`).
+  - Routes split: `web.php` / `auth.php` / `admin.php` (loaded in `bootstrap/app.php`;
+    `HandleInertiaRequests` in the web group).
+  - Layouts: public Blade `components/layouts/app.blade.php`; React `DashboardLayout` + `AdminLayout`.
+  - Tailwind brand tokens (`--color-brand-*`) in `resources/css/app.css`.
+  - Tooling: Pint (`pint.json`), ESLint 9 flat config (`eslint.config.js`), Prettier (`.prettierrc`);
+    npm scripts `lint`/`format`. Domain folders `app/{Enums,Services,Actions}` with READMEs.
+  - CI (`.github/workflows/ci.yml`): composer/npm install, build, pint --test, eslint, prettier,
+    migrate + `php artisan test` **against MySQL**.
+  - **Verified locally:** `npm run build`, `vendor/bin/pint --test`, `npm run lint`,
+    `npm run format:check`, and `php artisan test` (2/2) all pass.
+- **Next action:** **Phase 1 — Authentication & Accounts** ([docs/03-roadmap.md](docs/03-roadmap.md))
+  — registration (email+phone), login/logout, password reset, Google OAuth (Socialite), profile,
+  KYC upload. Then wrap the `/dashboard` route group in auth middleware.
+- **Env:** `.env` configured for **SQLite** (`database/database.sqlite`); base migrations run.
+- **Not committed:** Phase 0 changes are in the working tree, not yet committed to git.
 
 ## Must-resolve questions before Phase 4 (investment flow)
 
