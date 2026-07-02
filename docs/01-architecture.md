@@ -16,7 +16,7 @@ user-facing surfaces, each with the rendering approach best suited to it:
         ▼                                     ▼                                     ▼
 ┌────────────────┐                 ┌────────────────────┐                ┌────────────────────┐
 │  PUBLIC SITE   │                 │ INVESTOR DASHBOARD │                │    ADMIN PANEL     │
-│  Blade +       │                 │  React + Inertia   │                │  React + Inertia   │
+│  Blade +       │                 │  Blade + Livewire  │                │  React + Inertia   │
 │  Livewire      │                 │  (auth: web guard) │                │  (auth: admin      │
 │  (SEO, SSR)    │                 │                    │                │   guard, /admin)   │
 ├────────────────┤                 ├────────────────────┤                ├────────────────────┤
@@ -33,20 +33,26 @@ user-facing surfaces, each with the rendering approach best suited to it:
 - **Public pages must be crawlable and fast.** Blade + Livewire renders complete HTML on the
   server, so search engines index everything without executing JavaScript. Livewire adds
   interactivity (filters, search, funding progress) without a SPA.
-- **The dashboard and admin are app-like.** Rich, stateful, behind auth, and never indexed —
-  React + Inertia gives a first-class SPA developer experience while still routing and
+- **The investor area is server-rendered too.** The dashboard, profile, and KYC are **Blade +
+  Livewire** — the same stack as the public site (one mental model, one toolchain), still fully
+  server-driven.
+- **The admin panel is app-like.** Rich, stateful, behind the `admin` guard, and never indexed —
+  **React + Inertia** gives it a first-class SPA developer experience while still routing and
   authorizing on the server through Laravel controllers.
 
-Inertia is **not** a separate API. Controllers return `Inertia::render('Page', $props)`; there's
-no REST layer to maintain for the first-party UI. Same routes, same middleware, same auth.
+Inertia (admin only) is **not** a separate API. Controllers return `Inertia::render('Page', $props)`;
+there's no REST layer to maintain. Same routes, same middleware, same auth.
+
+> **Revised 2026-07-02:** the investor dashboard moved from React/Inertia to **Blade + Livewire**.
+> React/Inertia is now scoped to the **admin panel only**.
 
 ## Tech stack
 
 | Layer | Choice | Notes |
 |-------|--------|-------|
 | Language / Framework | **PHP 8.3 + Laravel 13** | Already scaffolded (`composer.json`: `laravel/framework ^13.8`) |
-| Public UI | **Livewire 4** + Blade | Server-rendered, SEO-first |
-| App UI (dashboard + admin) | **Inertia.js (inertia-laravel 3) + React 19** | SPA experience, server-driven routing |
+| Public + investor UI | **Livewire 4** + Blade | Server-rendered; public is SEO-first, investor area is behind the `web` guard |
+| Admin UI | **Inertia.js (inertia-laravel 3) + React 19** | SPA experience for **`/admin` only**, server-driven routing |
 | Styling | **Tailwind CSS 4** | Already scaffolded (`@tailwindcss/vite`) |
 | Build | **Vite 8** + `laravel-vite-plugin` | Already scaffolded |
 | Database | **SQLite** (local/dev/test) · **MySQL 8** (production) | Keep migrations/queries DB-agnostic; test on MySQL in CI |

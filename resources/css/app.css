@@ -8,15 +8,19 @@
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
         'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
-    /* Bechakeena brand palette (blue = trust/finance). Use brand-* tokens, not raw hex. */
-    --color-brand-50: #eff6ff;
-    --color-brand-100: #dbeafe;
-    --color-brand-200: #bfdbfe;
-    --color-brand-300: #93c5fd;
-    --color-brand-400: #60a5fa;
-    --color-brand-500: #3b82f6;
-    --color-brand-600: #2563eb;
-    --color-brand-700: #1d4ed8;
-    --color-brand-800: #1e40af;
-    --color-brand-900: #1e3a8a;
+    /* Bechakeena brand palette — raspberry magenta (from logo). Use brand-* tokens, not raw hex.
+       Source of truth: docs/07-brand.md. Primary = brand-600 (#b71e61). */
+    --color-brand-50: #faeff4;
+    --color-brand-100: #f7dee9;
+    --color-brand-200: #efb8d0;
+    --color-brand-300: #e788b2;
+    --color-brand-400: #dd4b8b;
+    --color-brand-500: #d02570;
+    --color-brand-600: #b71e61; /* primary — matches the logo */
+    --color-brand-700: #95184f;
+    --color-brand-800: #7b1441;
+    --color-brand-900: #5f1133;
+
+    /* Neutral ink — the charcoal wordmark color; use for headings/body, not pure black. */
+    --color-ink: #403f40;
 }

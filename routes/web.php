@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Dashboard\DashboardController;
+use App\Livewire\Dashboard\Index as DashboardIndex;
 use App\Livewire\Public\Home;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +15,9 @@ Route::get('/', Home::class)->name('home');
 |--------------------------------------------------------------------------
 | Investor dashboard (React + Inertia) — Phase 5
 |--------------------------------------------------------------------------
-| TODO(Phase 1): wrap this group in ['auth', 'verified'] middleware once
-| authentication exists. Left open in Phase 0 to smoke-test Inertia.
+| Behind 'auth' + 'verified': unverified users are bounced to the
+| email-verification notice (routes/auth.php).
 */
-Route::prefix('dashboard')->name('dashboard.')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('index');
+Route::middleware(['auth', 'verified'])->prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::get('/', DashboardIndex::class)->name('index');
 });

@@ -35,6 +35,35 @@ Consistency beats cleverness. Follow these so any developer can read any part of
 - **No business logic on the client** for money/authorization — mirror for UX only; server decides.
 - **Naming:** Components/Pages `PascalCase`; hooks `useX`; files match component name.
 
+### Shared UI feedback & loading states (build in Phase 1, reuse everywhere)
+
+Every async or state-changing interaction must show explicit feedback. Build the primitives **once**
+per stack and reuse them — never hand-roll one-off variants per page. The investor + public UI is
+**Blade + Livewire**; the admin UI is **React + Inertia**.
+
+**Investor/public (Blade + Livewire):**
+
+- **Flash alerts** — server flashes via `session()->flash('success'|'error'|'warning'|'info', ...)`,
+  rendered by the shared `@include('partials.flash')` in the layouts. Field errors stay inline via
+  `@error(...)`.
+- **Button / submit loading state** — the `<x-primary-button target="action">` component wires
+  `wire:loading.attr="disabled"` + an inline spinner on `wire:target`; never allow a double submit.
+- **Confirm dialogs** — for destructive/high-stakes actions (delete, deactivate, submit payment,
+  accept agreement, bulk payout): a Livewire-driven modal (or `wire:confirm`) that states the
+  consequence and disables confirm while the action is in flight.
+- **Loading skeletons** — Blade partials shown behind `wire:loading` for async sections; match the
+  final layout so there's no shift.
+
+**Admin (React + Inertia):**
+
+- Shared components in `resources/js/Components` (`Alert`, `FlashMessages`, `PrimaryButton` with a
+  `processing` state, `InputError`, `TextField`); flash via `flash.*` shared props in
+  `HandleInertiaRequests::share()`; submit state from `useForm().processing`; global Inertia progress
+  bar; a `ConfirmDialog` for destructive actions.
+
+**Both stacks:** every list/table defines an empty state and a retriable error state — never render a
+blank screen.
+
 ## Blade / Livewire
 
 - Public pages are Blade; interactive bits are **Livewire 3** components (`app/Livewire`,

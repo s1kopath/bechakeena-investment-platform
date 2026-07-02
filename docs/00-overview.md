@@ -11,6 +11,11 @@ Bechakeena is an established B2B laptop wholesale platform operating across **Ba
 Sharjah (UAE), and Dubai**, with mobile apps on Google Play and the App Store. This platform
 extends that ecosystem to outside capital.
 
+> **Global audience.** Investors may register from **anywhere in the world**, not just Bangladesh.
+> Build country-agnostic: **no locale-specific validation** (phone accepts international/E.164
+> formats), English UI, and keep an eye on currency/timezone assumptions. Money is currently modelled
+> in **BDT** — revisit if multi-currency is ever required (business decision, not yet in scope).
+
 ## Core value proposition
 
 - **For investors:** browse vetted investment "batches," pick a tenure (6 months / 1 year),

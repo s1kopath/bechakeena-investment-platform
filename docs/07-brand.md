@@ -4,9 +4,10 @@ Canonical brand assets for the Bechakeena Investment Platform, collected from th
 site **[bechakeena.com](https://bechakeena.com/)** (2026-07-02). Use these for the public site,
 emails, favicon, and the investor/admin UIs.
 
-> ⚠️ **Not yet applied to code.** [`resources/css/app.css`](../resources/css/app.css) still ships
-> the Phase 0 *placeholder* blue palette (`--color-brand-*`). Swap those tokens for the scale below
-> when styling begins (Phase 1+). This doc is the source of truth until then.
+> ✅ **Applied (2026-07-02).** The raspberry scale below is live in
+> [`resources/css/app.css`](../resources/css/app.css) (`--color-brand-*` + `--color-ink`), and the
+> Inertia progress bar (`resources/js/app.jsx`) uses `#b71e61`. This doc remains the source of truth
+> for the values.
 
 ## Logo
 
@@ -16,6 +17,11 @@ emails, favicon, and the investor/admin UIs.
 - **Mark:** four stylized `b`/`d`/`a` glyphs (an abstract monogram) in raspberry magenta, inside a
   square bracket-style frame, with the **BECHAKEENA** wordmark in dark charcoal below.
 - The same image is used as the site favicon (`32×32`, `192×192`) and apple-touch-icon.
+
+**Favicons (generated 2026-07-02)** from the logo (monogram squared on white) into `public/`:
+`favicon.ico` (16/32/48), `favicon-16x16.png`, `favicon-32x32.png`, `apple-touch-icon.png` (180),
+`icon-192.png`, `icon-512.png`. Linked from both root templates (`resources/views/app.blade.php`
+and `resources/views/components/layouts/app.blade.php`).
 
 **TODO before production:** obtain a vector (SVG) and a transparent-background PNG from Bechakeena.
 The current asset is a raster JPEG on solid white — fine for reference, not ideal for crisp/dark UIs.
@@ -33,8 +39,8 @@ block palette, which is **not** brand-meaningful).
 
 ### Tailwind-style tonal scale (`--color-brand-*`)
 
-Derived from the primary `#B71E61` (anchored at `600`). Paste into
-[`resources/css/app.css`](../resources/css/app.css), replacing the placeholder blue tokens:
+Derived from the primary `#B71E61` (anchored at `600`). Live in
+[`resources/css/app.css`](../resources/css/app.css):
 
 ```css
 /* Bechakeena brand palette — raspberry magenta (from logo). Use brand-* tokens, not raw hex. */

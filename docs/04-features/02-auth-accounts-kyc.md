@@ -9,6 +9,8 @@
 - Fields: name, **email** (unique), **phone** (unique), password (confirmed).
 - Validation via `FormRequest`: email format + uniqueness, phone format + uniqueness, password
   strength, terms acceptance.
+- **Global audience:** phone validation is **country-agnostic** (international / E.164 — optional
+  leading `+` then 7–15 digits, separators stripped). Do **not** add country-specific rules.
 - On success: create `User` (`kyc_status = pending`, `status = active`), send email verification,
   log in.
 - Rate-limit registration attempts.
