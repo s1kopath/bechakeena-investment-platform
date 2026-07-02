@@ -25,6 +25,7 @@ you need.
 | 04 | [Features](04-features/) | Per-feature functional specs |
 | 05 | [Conventions](05-conventions.md) | Coding standards, naming, git, testing |
 | 06 | [Deployment](06-deployment.md) | Environments, hosting, CI/CD, backups, security ops |
+| 07 | [Brand](07-brand.md) | Logo asset + brand colors (raspberry `#B71E61`) and Tailwind tokens |
 
 ## Feature specs
 
